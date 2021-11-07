@@ -1,10 +1,15 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // middleware
 app.use(express.static("public"));
+
+// env file
+dotenv.config({ path: ".env" });
 
 // view engine
 app.set("view engine", "ejs");
@@ -17,13 +22,10 @@ app.get("/", (req, res) => {
 const connectDB = async () => {
   try {
     // mongodb connection string
-    const con = await mongoose.connect(
-      "mongodb+srv://user2:simple03@node-tutorial.rsb65.mongodb.net/newUser?retryWrites=true&w=majority",
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      }
-    );
+    const con = await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log(`mongoDB connected: ${con.connection.host}`);
   } catch (err) {
     console.log(err);
@@ -37,5 +39,5 @@ app.get("/smoothies", (req, res) => {
 });
 
 app.listen(3000, () => {
-  console.log(`server is running on port ${3000}`);
+  console.log(`server is running on port ${PORT}`);
 });

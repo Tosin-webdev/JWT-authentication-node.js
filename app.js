@@ -17,6 +17,8 @@ app.set("view engine", "ejs");
 app.get("/", (req, res) => {
   res.render("home");
 });
+// Load routes
+app.use("/", require("./routes/authRoutes"));
 
 // database connection
 const connectDB = async () => {

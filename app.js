@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 3000;
 
 // middleware
 app.use(express.static("public"));
+app.use(express.json());
 
 // env file
 dotenv.config({ path: ".env" });

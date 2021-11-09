@@ -15,9 +15,6 @@ dotenv.config({ path: ".env" });
 // view engine
 app.set("view engine", "ejs");
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
 // Load routes
 app.use("/", require("./routes/authRoutes"));
 
@@ -37,9 +34,9 @@ const connectDB = async () => {
 };
 connectDB();
 
-app.get("/smoothies", (req, res) => {
-  res.render("smoothies");
-});
+// routes
+app.get("/", (req, res) => res.render("home"));
+app.get("/smoothies", (req, res) => res.render("smoothies"));
 
 app.listen(3000, () => {
   console.log(`server is running on port ${PORT}`);

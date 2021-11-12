@@ -3,7 +3,7 @@ const User = require("../models/User");
 // handle errors
 const handleErrors = (err) => {
   console.log(err.message, err.code);
-  let error = { email: "", password: "" };
+  let errors = { email: "", password: "" };
 
   // duplicate email error
   if (err.code === 11000) {
@@ -38,9 +38,9 @@ module.exports.signup_post = async (req, res) => {
   try {
     const user = await User.create({ email, password });
     res.status(201).json(user);
-  } catch (error) {
-    console.log(error);
-    res.status(400).send("error, user no created");
+  } catch (err) {
+    const errors = handleErrors(err)
+    res.status(400).json({errors});
   }
 };
 

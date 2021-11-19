@@ -17,16 +17,8 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// // fire a function after doc saved to db
-// userSchema.post('save', function(doc, next){
-//   console.log('new user was created & saved', doc);
-//   next()
-// })
-
-// fires a function before doc saved to db
+// fire a function before doc saved to db
 userSchema.pre("save", async function (next) {
-  // console.log(this)
-  // console.log('user about to be created and saved', this);
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
   next();
@@ -38,13 +30,13 @@ userSchema.statics.login = async function (email, password) {
   if (user) {
     const auth = await bcrypt.compare(password, user.password);
     if (auth) {
-      console.log("successful");
       return user;
     }
-    throw Error;
+    throw Error("incorrect password");
   }
   throw Error("incorrect email");
 };
 
-const User = mongoose.model("fulluser", userSchema);
+const User = mongoose.model("user", userSchema);
+
 module.exports = User;

@@ -3,7 +3,7 @@ const User = require("../models/User");
 
 const requireAuth = (req, res, next) => {
   const token = req.cookies.jwt;
-  // check json web token exists and is verified
+  // check if json web token exists and is verified
   if (token) {
     jwt.verify(token, "king frosh secret", (err, decodedToken) => {
       if (err) {

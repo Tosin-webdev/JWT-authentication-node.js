@@ -41,7 +41,7 @@ app.get("*", checkUser);
 app.get("/", (req, res) => res.render("home"));
 app.get("/smoothies", requireAuth, (req, res) => res.render("smoothies"));
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log(`server is running on port ${PORT}`);
 });
 
